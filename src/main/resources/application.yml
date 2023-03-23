@@ -1,0 +1,18 @@
+spring:
+  banner:
+    location: classpath:/banner.txt
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: "jdbc:postgresql://dockertoolbox:4432/server"
+    username: server
+    password: server
+    hikari:
+      connectionTimeout: 30000
+      idleTimeout: 10000
+      maxLifetime: 3600000
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    change-log: db/changelog/liquibase-changelog.xml
