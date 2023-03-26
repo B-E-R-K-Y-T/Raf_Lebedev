@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  shop-with-postgresql:
+    image: registry.gitlab.com/reconquista-lebed/shop-with-postgresql:master
+    container_name: shop-with-postgresql
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://pgpool-node-0:5432,pgpool-node-1:5432/shop"
+      SPRING_DATASOURCE_USERNAME: "shop"
+      SPRING_DATASOURCE_PASSWORD: "Blablabla123"
+    ports:
+      - "8080"
