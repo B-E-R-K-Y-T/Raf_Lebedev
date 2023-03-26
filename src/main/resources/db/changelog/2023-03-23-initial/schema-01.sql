@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset amorozov:initial-schema
+--changeset berkyt:initial-schema
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 create table products
@@ -14,7 +14,7 @@ create table products
     price numeric(19,2)
 );
 
-alter table products owner to server;
+alter table products;
 
 create table users
 (
@@ -25,7 +25,7 @@ create table users
     name varchar(255)
 );
 
-alter table users owner to server;
+alter table users;
 
 create table carts
 (
@@ -37,7 +37,7 @@ create table carts
             references users
 );
 
-alter table carts owner to server;
+alter table carts;
 
 create table carts_products
 (
@@ -51,7 +51,7 @@ create table carts_products
         primary key (cart_id, products_id)
 );
 
-alter table carts_products owner to server;
+alter table carts_products;
 
 create table orders
 (
@@ -64,7 +64,7 @@ create table orders
             references users
 );
 
-alter table orders owner to server;
+alter table orders;
 
 create table orders_products
 (
@@ -78,5 +78,5 @@ create table orders_products
         primary key (order_id, products_id)
 );
 
-alter table orders_products owner to server;
+alter table orders_products;
 
