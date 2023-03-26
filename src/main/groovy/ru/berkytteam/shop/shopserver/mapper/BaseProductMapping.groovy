@@ -1,6 +1,7 @@
 package ru.berkytteam.shop.shopserver.mapper
 
 import org.springframework.beans.factory.annotation.Autowired
+import ru.berkytteam.shop.shopserver.exception.EntityNotFoundException
 import ru.berkytteam.shop.shopserver.model.entity.Product
 import ru.berkytteam.shop.shopserver.repository.ProductRepository
 
@@ -21,6 +22,7 @@ trait BaseProductMapping {
             return null
         }
 
-        return productRepository.findById(productId).orElseThrow()
+        return productRepository.findById(productId)
+                .orElseThrow({ new EntityNotFoundException(Product, "id: $productId")})
     }
 }

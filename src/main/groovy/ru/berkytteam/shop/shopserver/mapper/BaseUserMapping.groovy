@@ -1,7 +1,8 @@
 package ru.berkytteam.shop.shopserver.mapper
 
-import org.mapstruct.Mapping
+
 import org.springframework.beans.factory.annotation.Autowired
+import ru.berkytteam.shop.shopserver.exception.EntityNotFoundException
 import ru.berkytteam.shop.shopserver.model.entity.User
 import ru.berkytteam.shop.shopserver.repository.UserRepository
 
@@ -14,7 +15,8 @@ trait BaseUserMapping {
             return null
         }
 
-        return userRepository.findById(userId).orElseThrow()
+        return userRepository.findById(userId)
+                .orElseThrow({new EntityNotFoundException(User, "id: $userId")})
     }
 
     UUID userToUserId(User user) {
