@@ -45,9 +45,34 @@ elif [[ "$1 $2" == "docker build" ]]; then
 elif [[ "$1 $2" == "docker push" ]]; then
     docker push "registry.gitlab.com/reconquista-lebed/shop-with-postgresql:${CI_DOCKER_TAG}" || exit 1
 elif [[ "$1 $2" == "docker run" ]]; then
-    docker run --rm \
-        -p 8080:8080 \
-        "registry.gitlab.com/reconquista-lebed/shop-with-postgresql:${CI_DOCKER_TAG}" \
+    docker-compose \
+        -f docker-compose.postgresql.yml \
+        -f docker-compose.service.yml \
+        pull \
+    || exit 1
+
+    docker-compose \
+        -f docker-compose.postgresql.yml \
+        -f docker-compose.service.yml \
+        up -d --remove-orphans \
+    || exit 1
+
+    docker-compose \
+        -f docker-compose.postgresql.yml \
+        -f docker-compose.service.yml \
+        logs -f shop-with-postgresql \
+    || exit 1
+elif [[ "$1 $2" == "docker restart" ]]; then
+    docker-compose \
+        -f docker-compose.postgresql.yml \
+        -f docker-compose.service.yml \
+        restart $3 \
+    || exit 1
+elif [[ "$1 $2" == "docker delete" ]]; then
+    docker-compose \
+        -f docker-compose.postgresql.yml \
+        -f docker-compose.service.yml \
+        down -v \
     || exit 1
 else
     printf "%s" "Usage: shop-with-postgres"
@@ -56,4 +81,6 @@ else
     printf "\t%s\t%s\n" "docker login" "Login to registry.gitlab.com"
     printf "\t%s\t%s\n" "docker build" "Build docker image"
     printf "\t%s\t%s\n" "docker push" "Push docker image"
+    printf "\t%s\t%s\n" "docker run" "Run docker-compose up"
+    printf "\t%s\t%s\n" "docker delete" "Run docker-compose down"
 fi
