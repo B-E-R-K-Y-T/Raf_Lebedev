@@ -14,8 +14,6 @@ create table products
     price numeric(19,2)
 );
 
-alter table products;
-
 create table users
 (
     id uuid not null
@@ -24,8 +22,6 @@ create table users
     email varchar(255),
     name varchar(255)
 );
-
-alter table users;
 
 create table carts
 (
@@ -36,8 +32,6 @@ create table carts
         constraint carts_user_fk
             references users
 );
-
-alter table carts;
 
 create table carts_products
 (
@@ -51,8 +45,6 @@ create table carts_products
         primary key (cart_id, products_id)
 );
 
-alter table carts_products;
-
 create table orders
 (
     id uuid not null
@@ -63,8 +55,6 @@ create table orders
         constraint orders_user_id_fk
             references users
 );
-
-alter table orders;
 
 create table orders_products
 (
@@ -77,6 +67,3 @@ create table orders_products
     constraint orders_products_pkey
         primary key (order_id, products_id)
 );
-
-alter table orders_products;
-
