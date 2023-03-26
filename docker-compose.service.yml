@@ -6,7 +6,7 @@ services:
     container_name: shop-with-postgresql
     restart: always
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://pgpool-node-0:5432,pgpool-node-1:5432/shop"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://pgpool-lb-0:5432/shop"
       SPRING_DATASOURCE_USERNAME: "shop"
       SPRING_DATASOURCE_PASSWORD: "Blablabla123"
     ports:

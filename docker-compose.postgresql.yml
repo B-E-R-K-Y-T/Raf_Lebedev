@@ -106,15 +106,19 @@ services:
       timeout: 5s
       retries: 5
 
-  # pgpool-lb-0:
-  #   image: registry.gitlab.com/reconquista-lebed/base-images/pgpool-lb:1.22.1
-  #   container_name: pgpool-lb-0
-  #   restart: always
-  #   depends_on:
-  #     - pgpool-node-0
-  #     - pgpool-node-1
-  #   ports:
-  #     - 5432
+  pgpool-lb-0:
+    container_name: pgpool-lb-0
+    restart: always
+    depends_on:
+      - pgpool-node-0
+      - pgpool-node-1
+    build:
+      context: ./conf/nginx
+      dockerfile: Dockerfile
+      tags:
+        - "registry.gitlab.com/reconquista-lebed/shop-with-postgresql/pgpool-lb:master"
+    ports:
+      - 5432
 
 volumes:
   pg-cluster_data-0:

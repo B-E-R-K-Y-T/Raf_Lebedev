@@ -54,7 +54,7 @@ elif [[ "$1 $2" == "docker run" ]]; then
     docker-compose \
         -f docker-compose.postgresql.yml \
         -f docker-compose.service.yml \
-        up -d --remove-orphans \
+        up -d --remove-orphans --build \
     || exit 1
 
     docker-compose \
