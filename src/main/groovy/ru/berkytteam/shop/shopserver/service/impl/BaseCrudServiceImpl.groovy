@@ -2,9 +2,11 @@ package ru.berkytteam.shop.shopserver.service.impl
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.CrudRepository
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.RequestBody
 import ru.berkytteam.shop.shopserver.mapper.BaseMapper
 
+@Transactional
 trait BaseCrudServiceImpl<EntityId, Entity, CreateDto, UpdateDto, FullDto, Mapper extends BaseMapper<Entity, CreateDto, UpdateDto, FullDto>, EntityRepo extends CrudRepository<Entity, EntityId>> {
     @Autowired
     EntityRepo repository
@@ -12,6 +14,7 @@ trait BaseCrudServiceImpl<EntityId, Entity, CreateDto, UpdateDto, FullDto, Mappe
     @Autowired
     Mapper mapper
 
+    @Transactional(readOnly = true)
     Optional<FullDto> getById(EntityId id) {
         return repository.findById(id).map(mapper::toDto)
     }
